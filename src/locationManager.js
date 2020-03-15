@@ -47,7 +47,7 @@ module.exports = class LocationManager {
     else return false;
   }
 
-  checkValid(dataModel) {
+  checkInRange(dataModel) {
     return new Promise((resolve, reject) => {
       if (!this.checkValidData(dataModel))
         reject(new Error("No valid location data provided."));
