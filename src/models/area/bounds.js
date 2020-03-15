@@ -1,4 +1,4 @@
-const { checkInPolygon } = require("../../utils.js");
+const polygonCheck = require("robust-point-in-polygon");
 
 module.exports = class BoundsModel {
   constructor(bounds) {
@@ -11,7 +11,10 @@ module.exports = class BoundsModel {
   }
 
   checkInBounds(position) {
-    return checkInPolygon(position, this.rawBounds);
+    const inside = polygonCheck(this.rawBounds, position);
+
+    // if polygon on polygon or inside polygon
+    return inside === -1 || inside === 0;
   }
 
   checkValid(dataModel) {
