@@ -18,6 +18,7 @@ await LocationManager.addCircumference({
   range: 50
 });
 
+// evaluates to true
 const isInRange = await LocationManager.checkInRange(
   new LM.Address("Buckingham Palace, London")
 );
@@ -69,7 +70,7 @@ Which evaluates to `true` because Big Ben is within the area defined by the boun
 
 <img width="50%" src="./docs/assets/exampleImageTwo.png">
 
-An address such as Victoria Station will evaluate `false` because it is outside the bounds above.
+An address such as Victoria Station will evaluate to `false` because it is outside the bounds above.
 
 ```js
 const victoriaStationLocation = new LM.Address("Victoria Station, London");
