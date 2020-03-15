@@ -1,0 +1,26 @@
+{
+  "name": "location-manager",
+  "version": "1.0.0",
+  "description": "Location manager is the easiest solution to check whether physical locations of various types are within certain defined areas.",
+  "main": "index.js",
+  "repository": "shopolivery/location-manager",
+  "scripts": {
+    "format": "prettier --write {**,**/**}/*.{js,md,css}"
+  },
+  "devDependencies": {
+    "prettier": "^1.19.1"
+  },
+  "files": [
+    "LICENSE",
+    "Changelog.md",
+    "Readme.md",
+    "index.js",
+    "src/"
+  ],
+  "author": "Shopolivery Limited",
+  "license": "MIT",
+  "dependencies": {
+    "nominatim-geocoder": "^0.1.4",
+    "postcodesio-client": "^0.3.4"
+  }
+}
