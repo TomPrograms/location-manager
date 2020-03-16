@@ -57,7 +57,7 @@ await LocationManager.addBounds({
 
 This will in effect create a triangle with the three locations as the points, with any address inside the triangle being a valid location for `LocationManager.checkInRange()`.
 
-<img width="50%" src="./docs/assets/exampleImageOne.png">
+<img style="max-width: 50%;" src="./docs/assets/exampleImageOne.png">
 
 You can then check for a valid address within the bounds like:
 
@@ -68,7 +68,7 @@ await LocationManager.checkInRange(bigBenLocation); // evaluates to true
 
 Which evaluates to `true` because Big Ben is within the area defined by the bounds above.
 
-<img width="50%" src="./docs/assets/exampleImageTwo.png">
+<img style="max-width: 50%;" src="./docs/assets/exampleImageTwo.png">
 
 An address such as Victoria Station will evaluate to `false` because it is outside the bounds above.
 
@@ -77,7 +77,7 @@ const victoriaStationLocation = new LM.Address("Victoria Station, London");
 await LocationManager.checkInRange(victoriaStationLocation); // evaluates to false
 ```
 
-<img width="50%" src="./docs/assets/exampleImageThree.png">
+<img style="max-width: 50%;" src="./docs/assets/exampleImageThree.png">
 
 ## Credit
 
