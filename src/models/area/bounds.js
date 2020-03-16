@@ -13,7 +13,7 @@ module.exports = class BoundsModel {
   checkInBounds(position) {
     const inside = polygonCheck(this.rawBounds, position);
 
-    // if polygon on polygon or inside polygon
+    // if polygon on polygon edge or inside polygon
     return inside === -1 || inside === 0;
   }
 
