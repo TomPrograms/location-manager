@@ -20,7 +20,7 @@
   "author": "Shopolivery Limited",
   "license": "MIT",
   "dependencies": {
-    "easy-geocoder": "^1.1.0",
+    "easy-geocoder": "^1.1.1",
     "postcodesio-client": "^0.3.4",
     "robust-point-in-polygon": "^1.0.3"
   }
