@@ -1,10 +1,10 @@
-const PostcodesIO = require("postcodesio-client");
-const postcodeAPI = new PostcodesIO();
+const PostcodesJS = require("postcodes.js");
+const Postcodes = new PostcodesJS();
 
 module.exports = class PostcodeEngine {
   postcodeToCoords(postcode) {
     return new Promise(function(resolve, reject) {
-      postcodeAPI
+      Postcodes
         .lookup(postcode.postcode)
         .then(data => {
           if (!data)
