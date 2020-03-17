@@ -7,10 +7,11 @@ module.exports = class AddressEngine {
   addressToCoords(address) {
     return new Promise(function(resolve, reject) {
       let query;
-      if (typeof address.address === "string") {
-        query = { q: address.address };
-      } else {
+      // if address.address is a dictionary
+      if (address.address.constructor == Object) {
         query = address.address;
+      } else {
+        query = { q: address.address };
       }
 
       Geocoder.search(query)
