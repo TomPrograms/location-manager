@@ -6,19 +6,21 @@ module.exports = class Line {
   }
 
   checkVerticalLine(dataModel) {
-    let alignmentLongitude = this.alignment.longitude;
-    let dataLongitude = dataModel.longitude;
-    return this.side === "above"
-      ? alignmentLongitude < dataLongitude
-      : alignmentLongitude > dataLongitude;
+    let alignmentLongitude = parseFloat(this.alignment.longitude);
+    let dataLongitude = parseFloat(dataModel.longitude);
+    // larger longitude means further left
+    return this.side === "left"
+      ? alignmentLongitude > dataLongitude
+      : alignmentLongitude < dataLongitude;
   }
 
   checkHorizontalLine(dataModel) {
-    let alignmentLatitude = this.alignment.latitude;
-    let dataLatitude = dataModel.latitude;
-    return this.side === "left"
-      ? alignmentLatitude > dataLatitude
-      : alignmentLatitude < dataLatitude;
+    let alignmentLatitude = parseFloat(this.alignment.latitude);
+    let dataLatitude = parseFloat(dataModel.latitude);
+    // larger latitude means higher up
+    return this.side === "above"
+      ? alignmentLatitude < dataLatitude
+      : alignmentLatitude > dataLatitude;
   }
 
   checkInRange(dataModel) {

@@ -138,22 +138,22 @@ module.exports = class LocationManager {
     let type = options.type;
     let side = options.side;
     if (!this.checkValidData(alignment))
-      throw new Error(data + " is not a valid position data type.");
+      throw new Error(alignment + " is not a valid position data type.");
 
     alignment = await this.convertToCoords(alignment);
 
     if (type === "horizontal" || type === "h") {
-      if (side !== "left" && side !== "right") {
+      if (side !== "above" && side !== "below") {
         throw new Error(
-          'With vertical lines, side can only be "left" or "right"'
+          'With vertical lines, side can only be "above" or "below"'
         );
       }
 
       return new LineModel(alignment, "horizontal", side);
     } else if (type === "vertical" || type === "v") {
-      if (side !== "above" && side !== "below") {
+      if (side !== "left" && side !== "right") {
         throw new Error(
-          'With vertical lines, side can only be "above" or "below"'
+          'With vertical lines, side can only be "left" or "right"'
         );
       }
 
