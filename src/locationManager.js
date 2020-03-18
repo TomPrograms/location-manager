@@ -48,21 +48,42 @@ module.exports = class LocationManager {
     else return false;
   }
 
-  checkInRange(dataModel) {
-    return new Promise((resolve, reject) => {
-      if (!this.checkValidData(dataModel))
-        reject(new Error("No valid location data provided."));
+  checkAreaModel(areaModel) {
+    if (!areaModel) return false;
+    else if (
+      areaModel instanceof CircumferenceModel ||
+      areaModel instanceof BoundsModel
+    )
+      return true;
+    else return false;
+  }
 
-      this.convertToCoords(dataModel).then(dataModel => {
-        let mappings = this.mappings;
-        for (let i = 0; i < mappings.length; i++) {
-          const result = mappings[i].checkValid(dataModel);
-          if (result === true) resolve(true);
-        }
+  addAreaModel(areaModel) {
+    if (!this.checkAreaModel(areaModel))
+      throw new Error("Couldn't add invalid area mapping model.");
+    this.mappings.push(areaModel);
+  }
 
-        resolve(false);
-      });
-    });
+  async checkMappings(mappings, dataModel) {
+    if (!this.checkValidData(dataModel))
+      throw new Error("Invalid location data model provided.");
+
+    dataModel = await this.convertToCoords(dataModel);
+
+    for (let i = 0; i < mappings.length; i++) {
+      const result = mappings[i].checkInRange(dataModel);
+      if (result === true) return true;
+    }
+    return false;
+  }
+
+  async checkInModelRange(model, dataModel) {
+    model = Array.isArray(model) ? model : [model];
+    return await this.checkMappings(model, dataModel);
+  }
+
+  async checkInRange(dataModel) {
+    return await this.checkMappings(this.mappings, dataModel);
   }
 
   async createCircumferenceModel(options) {
@@ -71,9 +92,7 @@ module.exports = class LocationManager {
       throw new Error("No valid centre argument provided.");
 
     centre = await this.convertToCoords(centre);
-    const newMapping = new CircumferenceModel(centre, options.range);
-
-    return newMapping;
+    return new CircumferenceModel(centre, options.range);
   }
 
   async addCircumference(options) {
