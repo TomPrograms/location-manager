@@ -74,9 +74,9 @@ module.exports = class LocationManager {
 
     for (let i = 0; i < mappings.length; i++) {
       const result = mappings[i].checkInRange(dataModel);
-      if (result === true) return true;
+      if (result === false) return false;
     }
-    return false;
+    return true;
   }
 
   async checkInModelRange(model, dataModel) {
