@@ -14,7 +14,8 @@ const BoundsModel = require("./models/area/bounds.js");
 module.exports = class LocationManager {
   constructor(options = {}) {
     this.addressEngine = options.addressEngine || new DefaultAddressEngine();
-    this.postcodeEngine = options.postcodeEngine || new DefaultUKPostcodeEngine();
+    this.postcodeEngine =
+      options.postcodeEngine || new DefaultUKPostcodeEngine();
 
     this.mappings = [];
   }
@@ -64,18 +65,27 @@ module.exports = class LocationManager {
     });
   }
 
-  async addCircumference(options) {
+  async createCircumferenceModel(options) {
     let centre = options.centre;
     if (!this.checkValidData(centre))
       throw new Error("No valid centre argument provided.");
-    centre = await this.convertToCoords(centre);
 
+    centre = await this.convertToCoords(centre);
     const newMapping = new CircumferenceModel(centre, options.range);
 
+    return newMapping;
+  }
+
+  async addCircumference(options) {
+    const newMapping = await this.createCircumferenceModel(options);
     this.mappings.push(newMapping);
   }
 
-  async addBounds(options) {
+  async createCircumference(options) {
+    return await this.createCircumferenceModel(options);
+  }
+
+  async createBoundsModel(options) {
     const convert = async data => {
       if (!this.checkValidData(data))
         throw new Error(data + " is not a valid argument.");
@@ -90,8 +100,15 @@ module.exports = class LocationManager {
     }
     await Promise.all(promises);
 
-    const newMapping = new BoundsModel(bounds);
+    return new BoundsModel(bounds);
+  }
 
+  async addBounds(options) {
+    const newMapping = await this.createBoundsModel(options);
     this.mappings.push(newMapping);
+  }
+
+  async createBounds(options) {
+    return await this.createBoundsModel(options);
   }
 };

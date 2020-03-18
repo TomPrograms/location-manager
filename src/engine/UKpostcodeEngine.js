@@ -4,8 +4,7 @@ const UKPostcodes = new PostcodesJS();
 module.exports = class UKPostcodeEngine {
   postcodeToCoords(postcode) {
     return new Promise(function(resolve, reject) {
-      UKPostcodes
-        .lookup(postcode.postcode)
+      UKPostcodes.lookup(postcode.postcode)
         .then(data => {
           if (!data)
             reject(new Error("Couldn't find data for provided postcode."));
