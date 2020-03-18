@@ -10,6 +10,7 @@ const AddressModel = require("./models/position/address.js");
 // import area models
 const CircumferenceModel = require("./models/area/circumference.js");
 const BoundsModel = require("./models/area/bounds.js");
+const LineModel = require("./models/area/line.js");
 
 module.exports = class LocationManager {
   constructor(options = {}) {
@@ -52,7 +53,8 @@ module.exports = class LocationManager {
     if (!areaModel) return false;
     else if (
       areaModel instanceof CircumferenceModel ||
-      areaModel instanceof BoundsModel
+      areaModel instanceof BoundsModel ||
+      areaModel instanceof LineModel
     )
       return true;
     else return false;
@@ -107,7 +109,7 @@ module.exports = class LocationManager {
   async createBoundsModel(options) {
     const convert = async data => {
       if (!this.checkValidData(data))
-        throw new Error(data + " is not a valid argument.");
+        throw new Error(data + " is not a valid position data type.");
 
       return await this.convertToCoords(data);
     };
@@ -129,5 +131,44 @@ module.exports = class LocationManager {
 
   async createBounds(options) {
     return await this.createBoundsModel(options);
+  }
+
+  async createLineModel(options) {
+    let alignment = options.alignment;
+    let type = options.type;
+    let side = options.side;
+    if (!this.checkValidData(alignment))
+      throw new Error(data + " is not a valid position data type.");
+
+    alignment = await this.convertToCoords(alignment);
+
+    if (type === "horizontal" || type === "h") {
+      if (side !== "left" && side !== "right") {
+        throw new Error(
+          'With vertical lines, side can only be "left" or "right"'
+        );
+      }
+
+      return new LineModel(alignment, "horizontal", side);
+    } else if (type === "vertical" || type === "v") {
+      if (side !== "above" && side !== "below") {
+        throw new Error(
+          'With vertical lines, side can only be "above" or "below"'
+        );
+      }
+
+      return new LineModel(alignment, "vertical", side);
+    } else {
+      throw new Error("Type can only be horizontal or vertical.");
+    }
+  }
+
+  async addLine(options) {
+    const newMapping = await this.createLineModel(options);
+    this.mappings.push(newMapping);
+  }
+
+  async createLine(options) {
+    return await this.createLineModel(options);
   }
 };
