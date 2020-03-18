@@ -17,7 +17,7 @@ module.exports = class BoundsModel {
     return inside === -1 || inside === 0;
   }
 
-  checkValid(dataModel) {
+  checkInRange(dataModel) {
     const position = [dataModel.latitude, dataModel.longitude];
 
     return this.checkInBounds(position, this.bounds);

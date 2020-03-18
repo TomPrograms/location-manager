@@ -33,7 +33,7 @@ module.exports = class CircumferenceModel {
     return earthRadiusKm * c;
   }
 
-  checkValid(dataModel) {
+  checkInRange(dataModel) {
     const latitude = dataModel.latitude;
     const longitude = dataModel.longitude;
 
