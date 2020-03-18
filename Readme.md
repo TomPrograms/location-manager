@@ -79,6 +79,52 @@ await LocationManager.checkInRange(victoriaStationLocation); // evaluates to fal
 
 <img style="max-width: 50%;" src="./docs/assets/exampleImageThree.png">
 
+You can also combine multiple area types, as seen below, to create a powerful and refined chosen area.
+
+```js
+// presuming location manager starting with no areas set
+
+await LocationManager.addBounds({
+  bounds: [
+    new LM.Address("Stratford, London"),
+    new LM.Address("Bromley, London"),
+    new LM.Address("Twickenham, London"),
+    new LM.Address("Wembley, London")
+  ]
+});
+
+await LocationManager.addCircumference({
+  centre: new LM.Address("Kensington, London"),
+  radius: 10
+});
+
+await LocationManager.addLine({
+  type: "vertical",
+  side: "right",
+  alignment: new LM.Address("White City, London")
+});
+
+await LocationManager.addLine({
+  type: "horizontal",
+  side: "above",
+  alignment: new LM.Address("Fullham, London")
+});
+```
+
+This effectively creates the area seen below. The valid area is above the green line, to the right of the blue line, and inside the black circle and inside the red polygon.
+
+<img style="max-width: 50%;" src="./docs/assets/exampleImageFour.png">
+
+This causes the results below.
+
+```js
+await LocationManager.checkInRange(new LM.Address("Kensington, London")); // true
+await LocationManager.checkInRange(new LM.Address("Westminster, London")); // true
+await LocationManager.checkInRange(new LM.Address("Buckingham Palace, London")); // true
+await LocationManager.checkInRange(new LM.Address("Balham, London")); // false
+await LocationManager.checkInRange(new LM.Address("Holloway, London")); // false
+```
+
 ## Credit
 
 Made with 💖 by <img src="./docs/assets/shopoliveryLogo.png" width="10%">. We at Shopolivery love open source software - we recognise the internet (and by extent Shopolivery) is only possible with the hard work of open source maintainers - so we are committed to contribute by maintaining and creating open source software under permissive licenses.
