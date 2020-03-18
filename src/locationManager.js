@@ -1,10 +1,10 @@
 // import engines
 const DefaultAddressEngine = require("./engine/addressEngine.js");
-const DefaultPostcodeEngine = require("./engine/postcodeEngine.js");
+const DefaultUKPostcodeEngine = require("./engine/UKpostcodeEngine.js");
 
 // import position models
 const CoordinateModel = require("./models/position/coordinate.js");
-const PostcodeModel = require("./models/position/postcode.js");
+const UKPostcodeModel = require("./models/position/UKpostcode.js");
 const AddressModel = require("./models/position/address.js");
 
 // import area models
@@ -14,7 +14,7 @@ const BoundsModel = require("./models/area/bounds.js");
 module.exports = class LocationManager {
   constructor(options = {}) {
     this.addressEngine = options.addressEngine || new DefaultAddressEngine();
-    this.postcodeEngine = options.postcodeEngine || new DefaultPostcodeEngine();
+    this.postcodeEngine = options.postcodeEngine || new DefaultUKPostcodeEngine();
 
     this.mappings = [];
   }
@@ -23,7 +23,7 @@ module.exports = class LocationManager {
     if (dataModel instanceof CoordinateModel) return dataModel;
     if (dataModel.latitude && dataModel.longitude) return dataModel;
 
-    if (dataModel instanceof PostcodeModel) {
+    if (dataModel instanceof UKPostcodeModel) {
       const coords = await this.postcodeEngine.postcodeToCoords(dataModel);
       dataModel.latitude = coords[0];
       dataModel.longitude = coords[1];
@@ -40,7 +40,7 @@ module.exports = class LocationManager {
     if (!dataModel) return false;
     else if (
       dataModel instanceof CoordinateModel ||
-      dataModel instanceof PostcodeModel ||
+      dataModel instanceof UKPostcodeModel ||
       dataModel instanceof AddressModel
     )
       return true;

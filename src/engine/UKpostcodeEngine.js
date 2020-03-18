@@ -1,10 +1,10 @@
 const PostcodesJS = require("postcodes.js");
-const Postcodes = new PostcodesJS();
+const UKPostcodes = new PostcodesJS();
 
-module.exports = class PostcodeEngine {
+module.exports = class UKPostcodeEngine {
   postcodeToCoords(postcode) {
     return new Promise(function(resolve, reject) {
-      Postcodes
+      UKPostcodes
         .lookup(postcode.postcode)
         .then(data => {
           if (!data)

@@ -1,4 +1,4 @@
-module.exports = class PostcodeDataModel {
+module.exports = class UKPostcodeDataModel {
   constructor(postcode) {
     this.postcode = postcode;
   }
