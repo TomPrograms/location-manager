@@ -3,6 +3,10 @@
 
   <p>Location manager is the easiest solution to maintain service areas and check whether physical locations of various types are within certain defined areas.</p>
 
+  <a href="https://npmjs.com/package/location-manager">
+    <img src="https://img.shields.io/npm/v/location-manager">
+  </a>
+
   <a href="./LICENSE">
     <img src="https://img.shields.io/badge/license-MIT-blue">
   </a>
