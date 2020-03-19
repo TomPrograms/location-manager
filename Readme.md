@@ -28,7 +28,7 @@ const isInRange = await LocationManager.checkInRange(
 
 We at Shopolivery needed a way to manage the service area of the Shopolivery service; the Shopolivery service isn't available in all locations, so we needed a convenient, robust library to verify whether user locations of all types (such as postcodes and addresses) were within irregular, defined-by-us service areas, so we created location manager. Location manager helps check whether physical locations are within defined areas such as circumferences and bounds.
 
-## Example Usage
+## Basic Usage
 
 You can install location-manager from NPM:
 
@@ -123,6 +123,82 @@ await LocationManager.checkInRange(new LM.Address("Westminster, London")); // tr
 await LocationManager.checkInRange(new LM.Address("Buckingham Palace, London")); // true
 await LocationManager.checkInRange(new LM.Address("Balham, London")); // false
 await LocationManager.checkInRange(new LM.Address("Holloway, London")); // false
+```
+
+## Example Usages
+
+You can create three different types of location references to locations, which can be used with the location manager: `address` (can lookup any address on the globe), `UKPostcode` (can lookup any postcode in the UK) and `coordinates` (can reference any co-ordinates on the globe).
+
+```js
+// de-structured address
+new LM.Address("Buckingham Palace, London");
+// structured address (faster)
+new LM.Address({
+  city: "London",
+  street: "Buckingham Palace Road"
+});
+
+// faster than looking up postcode through the address object
+new LM.UKPostcode("SW1A 1AA");
+
+// fastest
+new LM.Coordinate(51.501247, -0.142437);
+```
+
+You can create three different types of area references: `circumference`, `line` and `bounds`. You can add them to the location manager with their relevant `add` method.
+
+```js
+// you can add an unlimited amount of bounds
+await LocationManager.addBounds({
+  bounds: [
+    new LM.Address("Stratford, London"),
+    new LM.Address("Bromley, London"),
+    new LM.Address("Twickenham, London"),
+    new LM.Address("Wembley, London")
+  ]
+});
+
+// if type is "horizontal", side can be "above" or "below"
+// if type is "vertical", side can be "left" or "right"
+// alignment specifies where the line crosses
+// valid area is where the side points, e.g. if side is "above" valid area is above the line
+await LocationManager.addLine({
+  type: "horizontal",
+  side: "above",
+  alignment: new LM.Address("Fullham, London")
+});
+
+// centre is the centre of the circle
+// radius is the radius of the valid area in kilometres
+await LocationManager.addCircumference({
+  centre: new LM.Address("Kensington, London"),
+  radius: 10
+});
+```
+
+You can instead create and return an area reference (but not add it to the location manager). Each area reference has a relevant method, e.g.
+
+```js
+const circumference = await LocationManager.createCircumference({
+  centre: new LM.Address("Buckingham Palace, London"),
+  radius: 5
+});
+```
+
+Test if location reference is valid in current location manager.
+
+```js
+await LocationManager.checkInRange(locationObject);
+```
+
+Test whether specified locations are within specified area definitions.
+
+```js
+await LocationManager.checkInModelRange(circumferenceArea, addressReference);
+await LocationManager.checkInModelRange(
+  [circumferenceArea, boundsArea],
+  postcodeReference
+);
 ```
 
 ## Credit
