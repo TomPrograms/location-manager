@@ -1,5 +1,7 @@
 const PostcodesJS = require("postcodes.js");
-const UKPostcodes = new PostcodesJS();
+const UKPostcodes = new PostcodesJS({
+  useragent: "Location Manager Application"
+});
 
 module.exports = class UKPostcodeEngine {
   postcodeToCoords(postcode) {
