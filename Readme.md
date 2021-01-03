@@ -115,7 +115,7 @@ await LocationManager.addLine({
 });
 ```
 
-This effectively creates the area seen below. The valid area is above the green line, to the right of the blue line, and inside the black circle and inside the red polygon.
+This effectively creates the area seen below. The valid area is above the green line, to the right of the blue line, inside the black circle and inside the red polygon.
 
 <img style="max-width: 50%;" src="./docs/assets/exampleImageFour.png">
 
